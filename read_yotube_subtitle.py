@@ -44,14 +44,28 @@ def get_youtube_subtitles(video_url: str, lang_codes: list = []):
 
     return None
 
+"""def get_youtube_playlist1(playlist_url:str)
+    # Validate and extract ID of the playlist 
+    # #AIzaSyBWgU_1YFk9DzLLk0A_ooV_YFRjutGbCXk
+    playlist_id = None
+    if 'list=' in playlist_url:
+        playlist_id = playlist_url.split('list=')[-1].split('&')[0]
+    else:
+        print(f"Error: Impossible to get playlist ID from URL: {playlist_url}")
+        return None
 
-video_url = "https://www.youtube.com/watch?v=FezVkh_VSzM" 
-subtitles_text = get_youtube_subtitles(video_url, lang_codes=['ru', 'uk', 'en', 'a.en', 'uk', 'a.uk']) 
-subtitles_text = subtitles_text if subtitles_text else ""
-print(subtitles_text[:500] + "...") 
+    # Get subtitles from video
+    print(f"Info: Attempt to load subtitles for ID: {playlist_id}")
+ """   
 
-video_url = "https://www.youtube.com/watch?v=V4I0DH4J6yo&list=PL4sbV49yxRUhtG1BxSqD-PrnUBbXB2_06&index=2&t=537s" 
-subtitles_text = get_youtube_subtitles(video_url, lang_codes=['ru', 'uk', 'en', 'a.en', 'uk', 'a.uk']) 
-subtitles_text = subtitles_text if subtitles_text else ""
-print(subtitles_text[:500] + "...") 
+
+
+if __name__ == "__main__":
+    # Example usage
+    video_url = "https://www.youtube.com/watch?v=FezVkh_VSzM" 
+    subtitles_text = get_youtube_subtitles(video_url, lang_codes=['ru', 'uk', 'en', 'a.en', 'uk', 'a.uk']) 
+    subtitles_text = subtitles_text if subtitles_text else ""
+    print(subtitles_text[:500] + "...") 
+
+   
 
