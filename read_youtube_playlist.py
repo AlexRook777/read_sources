@@ -1,8 +1,9 @@
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-import re 
+from common_func import clean_string_keep_cyrillic_alphanumeric_and_space
+import re
 
-def get_youtube_playlist(playlist_url: str, api_key:str):
+def get_youtube_playlist(playlist_url: str, api_key='AIzaSyBWgU_1YFk9DzLLk0A_ooV_YFRjutGbCXk'):
     ''' 
     Get list of video from youtube playlist
     
@@ -26,11 +27,11 @@ def get_youtube_playlist(playlist_url: str, api_key:str):
         return []
 
     # 
-    playlist_id_match = re.search(r"list=([a-zA-Z0-9_-]+)", playlist_url)
-    if not playlist_id_match:
+    playlist_id = re.search(r"list=([a-zA-Z0-9_-]+)", playlist_url) 
+    if not playlist_id:
         print(f"Error: Can't get playlist ID from URL: {playlist_url}")
         return []
-    playlist_id = playlist_id_match.group(1)
+    playlist_id = playlist_id.group(1)
 
     youtube = build('youtube', 'v3', developerKey=api_key)
 
@@ -55,7 +56,7 @@ def get_youtube_playlist(playlist_url: str, api_key:str):
                     if video_id and video_title:
                         videos_info.append({
                             "id": video_id,
-                            "title": video_title,
+                            "title": clean_string_keep_cyrillic_alphanumeric_and_space(video_title),
                             "url": f"https://www.youtube.com/watch?v={video_id}"
                         })
 

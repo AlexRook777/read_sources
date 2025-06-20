@@ -1,5 +1,6 @@
 from youtube_transcript_api._api import YouTubeTranscriptApi
 from youtube_transcript_api._errors import NoTranscriptFound, TranscriptsDisabled
+from common_func import clean_string_keep_cyrillic_alphanumeric_and_space
 
 # Get subtitles from one youtube video and return it as text 
 def get_youtube_subtitles(video_url: str, lang_codes: list = []):
@@ -15,7 +16,7 @@ def get_youtube_subtitles(video_url: str, lang_codes: list = []):
         return None
 
     # Get subtitles from video 
-    print(f"Info: Attempt to load subtitles for ID: {video_id}")
+    #print(f"Info: Attempt to load subtitles for ID: {video_id}")
     try:
         if lang_codes:
             # 
@@ -29,10 +30,11 @@ def get_youtube_subtitles(video_url: str, lang_codes: list = []):
                     
         if transcript_data is not None:
             full_text = " ".join([getattr(segment, 'text', '') for segment in transcript_data])
-            print(f"Success: Subtitles got saccessfully. Lenght: {len(full_text)}  Lang: {lang_code}")
-            return full_text
+            cleaned_text = clean_string_keep_cyrillic_alphanumeric_and_space(full_text)
+            return cleaned_text
         else:
-            print("Subtitles are not gotten")
+            pass
+            #print("Subtitles are not gotten")
 
     except NoTranscriptFound:
         print(f"Error: subtitels wasn't found for video '{video_id}'")
@@ -66,6 +68,8 @@ if __name__ == "__main__":
     subtitles_text = get_youtube_subtitles(video_url, lang_codes=['ru', 'uk', 'en', 'a.en', 'uk', 'a.uk']) 
     subtitles_text = subtitles_text if subtitles_text else ""
     print(subtitles_text[:500] + "...") 
+
+
 
    
 
