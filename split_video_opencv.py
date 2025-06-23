@@ -192,6 +192,7 @@ def trim_video_opencv(
         out.release() # Завжди звільняємо VideoWriter
 
 # --- Приклад використання ---
+#   test_channel_url = "https://www.youtube.com/@VisualMelodies"
 if __name__ == "__main__":
     start_time = time.time()
     instagram_video_width = 1080
@@ -200,19 +201,26 @@ if __name__ == "__main__":
     crop_width = 608
     crop_height = 1080
     crop_x = 656
+    crop_y = 0
     #for 720
     #crop_width = 405
     #crop_height = 720
     #crop_x = 338
+    crop_y = 0
+    #for shorts W1080*H1920
+    crop_width = 405
+    crop_height = 850
+    crop_x = 478
+    crop_y = 1069
     #current_script_dir = Path(__file__).parent
     current_script_dir = Path("C:/")
-    file_input_path_trim = str(current_script_dir / "video" / "input_video" / "videoplaybackVM.mp4")
+    file_input_path_trim = str(current_script_dir / "video" / "input_video" / "video_2025-06-23_07-42-40.mp4")
     file_output_path_trim = str(current_script_dir / "video" / "output_video" / "video_trimmed.mp4")
     start = 0
-    for i in range(70):
+    for i in range(22):
         start_time_trim = time.time()
         print(f"Video processing: {i + 1}/10")
-        start= start + 40
+        start= start + 2
         success_trim = trim_video_opencv(file_input_path_trim, file_output_path_trim, start, 8)
         if success_trim:
             print(f"Success: Trim duration: {time.time() - start_time_trim:.4f} sec.")
@@ -224,7 +232,7 @@ if __name__ == "__main__":
         file_name= 'video '+datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S")+'.mp4'
         file_output_path_crop = str(current_script_dir / "video" / "output_video" / file_name)
 
-        success_crop = crop_video_opencv(file_input_path_crop, file_output_path_crop, crop_x, 0, crop_width, crop_height )
+        success_crop = crop_video_opencv(file_input_path_crop, file_output_path_crop, crop_x, crop_y, crop_width, crop_height )
         if success_crop:
             print(f"Success: Crop duration: {time.time() - start_time_crop:.4f} sec.")
         else:
